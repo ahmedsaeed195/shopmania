@@ -8,8 +8,13 @@ db = new Sequelize(process.env.SHOPMANIA_DBNAME, process.env.SHOPMANIA_DBUSER, p
 });
 
 (async () => {
-  await db.sync();
-  console.log('sync complete');
+  try {
+    const sync = await db.sync();
+    if(sync)
+      console.log('sync complete');
+  } catch (err) {
+    throw err;
+  }
 })();
 
 module.exports = db;

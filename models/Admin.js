@@ -5,7 +5,7 @@ const Admin = db.define('admin', {
     id: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'user_types',
+            model: 'users',
             key: 'id'
         },
         primaryKey: true

@@ -5,7 +5,7 @@ const Customers = db.define('customers', {
     id: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'user_types',
+            model: 'users',
             key: 'id'
         },
         primaryKey: true
