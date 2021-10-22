@@ -46,7 +46,7 @@ class CustomerController {
                 }
                 const token = findUserType.generateToken();
                 const genToken = { user_id: findUserType.id, token: token };
-                await JWT.create(genToken);
+                await JWT.create(genToken).then(value => {value.login();});
                 return res.header('x-auth-token', token).status(200).json({ message: 'Logged in successfully!', customer: customer, token: token });
             }
             return res.status(400).json({ message: 'Invalid email or password' });
@@ -58,12 +58,12 @@ class CustomerController {
         try {
             const data = req.body;
             const findPost = await Post.findOne({ where: { id: data.post_id } });
-            const updatePost = await Post.update({ quantity: findPost.quantity - data.quantity }, { where: { id: data.post_id } });
+            const updatePost = await Post.update({ quantity: (findPost.quantity - data.quantity) }, { where: { id: data.post_id } });
             const findProduct = await Product.findOne({ where: { id: findPost.product_id } });
-            const updateProduct = await Product.update({ quantity: findProduct.stock - data.quantity }, { where: { id: post.product_id } });
+            const updateProduct = await Product.update({ stock: (findProduct.stock - data.quantity) }, { where: { id: findPost.product_id } });
             if (updatePost && updateProduct) {
-                data.total_price = findPost.price * data.quantity;
-                await Order.Create(data);
+                data.total_price = (findPost.price * data.quantity);
+                await Order.create(data);
                 return res.status(200).json({ message: 'Order created' });
             }
             return res.status(400).json({ message: 'Invalid order' });

@@ -1,9 +1,9 @@
 const { check, validationResult } = require('express-validator');
 
 module.exports = [
-    check('post_id').isInt().toInt().withMessage('Invalid post ID').optional(),
-    check('customer_id').isFloat().toFloat().withMessage('Invalid customer ID').optional(),
-    check('quantity').isInt().toInt().withMessage('Invalid product quantity').optional(),
+    check('post_id').isInt().toInt().withMessage('Invalid post ID').notEmpty(),
+    check('customer_id').isFloat().toFloat().withMessage('Invalid customer ID').notEmpty(),
+    check('quantity').isInt().toInt().withMessage('Invalid product quantity').notEmpty(),
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty())

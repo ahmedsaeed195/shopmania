@@ -125,9 +125,9 @@ class AdminController {
     async updatePost(req, res) {
         try {
             const data = req.body;
-            const product = await Product.findOne({ where: { id: data.product_id } });
-            if (product) {
-                const query = await Post.update(data, { where: { id: data.id } });
+            const post = await Post.findOne({ where: { id: req.params.id } });
+            if (post) {
+                const query = await Post.update(data, { where: { id: req.params.id} });
                 if (query) {
                     return res.status(200).json({ message: 'post updated' });
                 }
@@ -140,7 +140,7 @@ class AdminController {
     }
     async destroyPost(req, res) {
         try {
-            const post = await Order.destroy({ where: { id: req.params.id } });
+            const query = await Order.destroy({ where: { id: req.params.id } });
             if (query) {
                 return res.status(200).json({ message: 'Order has been deleted successfully' });
             }
@@ -211,7 +211,7 @@ class AdminController {
                 }
                 const token = findUserType.generateToken();
                 const genToken = { user_id: findUserType.id, token: token };
-                await JWT.create(genToken);
+                await JWT.create(genToken).then(value => {value.login();});
                 return res.header('x-auth-token', token).status(200).json({ message: 'Logged in successfully!', admin: admin, token: token });
             }
             return res.status(400).json({ message: 'Invalid email or password' });

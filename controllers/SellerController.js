@@ -45,7 +45,7 @@ class SellerController {
                 }
                 const token = findUserType.generateToken();
                 const genToken = { user_id: findUserType.id, token: token };
-                await JWT.create(genToken);
+                await JWT.create(genToken).then(value => {value.login();});
                 return res.header('x-auth-token', token).status(200).json({ message: 'Logged in successfully!', seller: seller, token: token });
             }
             return res.status(400).json({ message: 'Invalid email or password' });
