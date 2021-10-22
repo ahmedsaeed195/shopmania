@@ -10,8 +10,6 @@ const productValidator = require('../middleware/validation/productValidator');
 const productValidatorUpdate = require('../middleware/validation/productValidatorUpdate');
 const adminAuth = require('../middleware/authorization/adminAuth');
 
-//TODO: check other routes first then check admin related routes
-
 //admin login
 Router.post('', loginValidator, AdminController.login);
 

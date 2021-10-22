@@ -7,7 +7,6 @@ const postValidator = require('../middleware/validation/postsValidator');
 const postValidatorUpdate = require('../middleware/validation/postsValidatorUpdate');
 const sellerAuth = require('../middleware/authorization/sellerAuth');
 
-//TODO: test seller and post routes
 //seller
 Router.get('/:id', SellerController.showOne);
 Router.post('/',loginValidator, SellerController.login);

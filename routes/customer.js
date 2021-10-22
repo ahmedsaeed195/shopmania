@@ -7,8 +7,6 @@ const orderValidator = require('../middleware/validation/orderValidator');
 const orderValidatorUpdate = require('../middleware/validation/orderValidatorUpdate');
 const customerAuth = require('../middleware/authorization/customerAuth');
 
-
-//TODO: test customer and order routes
 //customer
 Router.get('/:id', CustomerController.showOne);
 Router.post('/', loginValidator, CustomerController.login);
